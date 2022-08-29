@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { GraphQLClient, gql } from "graphql-request";
 
 export async function fetcher(query, variables) {
-  const graphQLClient = new GraphQLClient('http://www.local.hilton.com:4000/graphql', {
+  const graphQLClient = new GraphQLClient('http://localhost:4000/graphql', {
     credentials: 'same-origin',
     mode: 'cors',
   })
