@@ -1,0 +1,26 @@
+{
+  "name": "ggib-ui",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^4.2.3",
+    "@tanstack/react-query-devtools": "^4.2.3",
+    "graphql": "^16.6.0",
+    "graphql-request": "^5.0.0",
+    "ky": "^0.31.1",
+    "ky-universal": "^0.10.1",
+    "next": "12.2.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "eslint": "8.23.0",
+    "eslint-config-next": "12.2.5"
+  }
+}

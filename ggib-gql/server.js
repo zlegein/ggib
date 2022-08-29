@@ -8,6 +8,7 @@ var schema = buildSchema(`
   type Query {
     hello: String
     user(id: Int!): UserPost
+    posts(count: Int): [Post]
   }
   type User {
     name: String
@@ -17,6 +18,7 @@ var schema = buildSchema(`
     posts: [Post]
   }  
   type Post {
+    pid: String
     title: String
     content: String
   }  
@@ -34,6 +36,19 @@ var schema = buildSchema(`
 var root = {
   hello: () => {
     return 'Hello world!';
+  },
+  posts: ({ count }) => {
+    if (!count) {
+      return []
+    };
+    const posts = [...Array(count)].map((u, i) => {
+      return {
+        pid: `p${i + 1}`,
+        title: `Post ${i + 1}`,
+        content: `Content ${i + 1}`
+      }
+    })
+    return posts;    
   },
   user: ({ id }) => {
     return {
