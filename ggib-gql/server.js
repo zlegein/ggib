@@ -85,7 +85,6 @@ var root = {
 var app = express();
 app.use(
   cors({
-    origin: /hilton\.com/,
     methods: ['GET', 'HEAD', 'OPTIONS'],
     optionsSuccessStatus: 200,
   })
