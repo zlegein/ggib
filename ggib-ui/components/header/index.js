@@ -10,9 +10,9 @@ export const Header = () => {
       <Link href="/">
       <a className="text-xl text-slate-500 hover:text-blue-600 hover:underline">Home</a>
       </Link>
-      <Link href="/user/5">
+      <Link href="/user">
         <a className="text-xl text-slate-500 hover:text-blue-600 hover:underline">
-          User 5
+          User
         </a>
       </Link>
       <Link href="/posts">

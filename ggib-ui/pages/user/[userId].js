@@ -12,14 +12,11 @@ const UserPage = () => {
   )
 }
 
-export const getStaticPaths = async () => {
-  return {
-      paths: [], //indicates that no page needs be created at build time
-      fallback: 'blocking' //indicates the type of fallback
-  }
-}
-
-export async function getStaticProps({ params }) {  
+/**
+ * Prefeches the user information on the server.
+ * @see https://tanstack.com/query/v4/docs/guides/ssr#using-hydration 
+ */
+export async function getServerSideProps({ params }) {  
   const { userId } = params 
   if (!userId) {
     return {

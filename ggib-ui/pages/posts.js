@@ -12,6 +12,10 @@ const Posts = () => {
   )
 }
 
+/**
+ * Prefetches the first 10 posts on the server.
+ * @see https://tanstack.com/query/v4/docs/guides/ssr#using-hydration 
+ */
 export async function getStaticProps() {
   const queryClient = new QueryClient()
 
