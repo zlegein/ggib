@@ -7,7 +7,6 @@ const Posts = () => {
   return (
     <Layout>
       <Header />
-      <InfoBox>ℹ️ This page shows how to use SSG with React-Query.</InfoBox>
       <PostList />
     </Layout>
   )

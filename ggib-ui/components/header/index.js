@@ -6,33 +6,20 @@ export const Header = () => {
   const { pathname } = useRouter()
 
   return (
-    <header>
+    <header className="space-x-10">
       <Link href="/">
-        <a className={pathname === '/' ? 'is-active' : ''}>Home</a>
+      <a className="text-xl text-slate-500 hover:text-blue-600 hover:underline">Home</a>
       </Link>
       <Link href="/user/5">
-        <a className={pathname === '/user/5' ? 'is-active' : ''}>
+        <a className="text-xl text-slate-500 hover:text-blue-600 hover:underline">
           User 5
         </a>
       </Link>
       <Link href="/posts">
-        <a className={pathname === '/posts' ? 'is-active' : ''}>
+      <a className="text-xl text-slate-500 hover:text-blue-600 hover:underline">
           Posts
         </a>
       </Link>
-      <style jsx>{`
-        header {
-          margin-bottom: 25px;
-        }
-        a {
-          font-size: 14px;
-          margin-right: 15px;
-          text-decoration: none;
-        }
-        .is-active {
-          text-decoration: underline;
-        }
-      `}</style>
     </header>
   )
 }
