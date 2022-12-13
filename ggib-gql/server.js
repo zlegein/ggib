@@ -5,22 +5,32 @@ var { buildSchema } = require('graphql');
 
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
+  input PostInput {
+    content: String
+    title: String
+    author: String
+  }
+  type Mutation {
+    createPost(input: PostInput): Post
+  }
   type Query {
+    post(id: String!): Post
     hello: String
     user(id: Int!): UserPost
     posts(count: Int): [Post]
-  }
+  }  
+  type Post {
+    pid: String
+    title: String
+    content: String
+    author: String
+  }  
   type User {
     name: String
     fullName: String
     id: Int!
     avatar: String
     posts: [Post]
-  }  
-  type Post {
-    pid: String
-    title: String
-    content: String
   }  
   type Friend {
     name: String
@@ -30,25 +40,46 @@ var schema = buildSchema(`
     me: User
     friends: [Friend]
   }
-`);
+`); 
 
+class Post {
+  constructor(pid, {content, title, author}) {
+    this.pid = pid;   
+    this.title = title;
+    this.content = content;   
+    this.author = author;
+  }
+}
+
+// fake storage
+const database = {}
 // The root provides a resolver function for each API endpoint
-var root = {
+const root = {
   hello: () => {
     return 'Hello world!';
   },
+  createPost: ({input}) => {   
+    // Create a random id for our "database".   
+    const pid = require('crypto').randomBytes(10).toString('hex');
+    database[pid] = input;   
+    return new Post(pid, input);
+  },
+  post: ({id}) => {
+    console.log('DTATBASE', database)
+    if (!database[id]) {
+      throw new Error(`post does not exist with id: '${id}'`)
+    }
+    return new Post(id, database[id])
+  },
   posts: ({ count }) => {
-    if (!count) {
-      return []
-    };
-    const posts = [...Array(count)].map((u, i) => {
-      return {
-        pid: `p${i + 1}`,
-        title: `Post ${i + 1}`,
-        content: `Content ${i + 1}`
+    const posts = Object.keys(database).reduce((acc, id) => {
+      if (acc.length === count) {
+        return acc;
       }
-    })
-    return posts;    
+      acc.push(new Post(id, database[id]))
+      return acc;
+    }, [])
+    return posts;
   },
   user: ({ id }) => {
     return {
