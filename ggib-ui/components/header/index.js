@@ -20,6 +20,11 @@ export const Header = () => {
           Posts
         </a>
       </Link>
+      <Link href="/posts/create">
+      <a className="text-xl text-slate-500 hover:text-blue-600 hover:underline">
+          Create
+        </a>
+      </Link>
     </header>
   )
 }

@@ -11,25 +11,33 @@ export async function fetcher(query, variables) {
 }
 
 export const UserDocument = gql`
-query findUser($id: Int!) {
-  user(id: $id) {
-    me {
-      name
-      fullName
-      id
-      avatar
-      posts {
-        title
-        content
+  query findUser($id: Int!) {
+    user(id: $id) {
+      me {
+        name
+        fullName
+        id
+        avatar
+        posts {
+          title
+          content
+        }
       }
-    }
-  friends {
-    name
-    numberOfPosts
+      friends {
+        name
+        numberOfPosts
+      }
+    }  
   }
-}
-}
 `;
+
+export const CreatePostDocument = gql`
+  mutation CreatePost($input: PostInput) {
+    createPost(input: $input) {
+      pid
+    }
+  }
+`
 
 const fetchUser = async (id) => {
   const { user } = await fetcher(UserDocument, { id: parseInt(id) })
@@ -50,6 +58,33 @@ query getPosts($count: Int) {
 }
 `;
 
+export const PostDocument = gql`
+query getPost($id: String!) {
+  post(id: $id) {
+    pid
+    title
+    content
+    author
+ }
+}
+`;
+
+const createPostFetch = async ({ content, title, author }) => {
+  const data = await fetcher(CreatePostDocument, { input: { title, content, author }})
+  return data;
+}
+
+const fetchPost = async (id) => {
+  console.log('what is it ', id)
+  const { post } = await fetcher(PostDocument, { id })
+  console.log('POST', post);
+  return post;
+}
+
+const useGetPost = (id) => {
+  return useQuery(['post', id], () => fetcher(PostDocument, { id }))
+}
+
 const fetchPosts = async (count) => {
   const { posts } = await fetcher(PostsDocument, { count: parseInt(count) })
   return posts;
@@ -69,7 +104,7 @@ const useHello = () => {
   return useQuery(['hello'], () => fetcher(HelloDocument))
 }
 
-export { useGetUser, fetchUser, usePosts, fetchPosts, useHello }
+export { useGetUser, fetchUser, usePosts, fetchPosts, useHello, createPostFetch, fetchPost, useGetPost }
 
 
 

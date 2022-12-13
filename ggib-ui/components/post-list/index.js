@@ -1,10 +1,13 @@
+import { useRouter } from 'next/router'
 import React, { useState } from 'react'
+import Link from 'next/link'
 import { usePosts } from '../../hooks'
 
 export const PostList = () => {
+  const router = useRouter
   const [postCount, setPostCount] = useState(10)
   const { data, isLoading, isFetching } = usePosts(postCount)
-
+  
   if (isLoading) return <div>Loading</div>
   return (
     <section className="pb-10">
@@ -13,7 +16,9 @@ export const PostList = () => {
           <li className="container mb-4" key={post.pid}>
             <div className='flex item-center'>
               <span className="text-lg mr-2">{index + 1}. </span>
-              <a className="text-lg mr-4 no-underline" href="#">{post.title}</a>
+              <Link href={`/posts/${post.pid}`}>
+                {post.title}
+              </Link>
             </div>
           </li>
         ))}
